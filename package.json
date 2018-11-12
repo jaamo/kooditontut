@@ -1,0 +1,40 @@
+{
+    "name": "kooditontut",
+    "version": "1.0.0",
+    "description": "Lapsille suunnattu joulukalenteri, joka opettaa koodaamisen perusteita",
+    "main": "index.js",
+    "scripts": {
+        "start": "webpack-dev-server --config ./webpack.config.js --mode development",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/jaamo/kooditontut.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/jaamo/kooditontut/issues"
+    },
+    "homepage": "https://github.com/jaamo/kooditontut#readme",
+    "devDependencies": {
+        "babel-core": "^6.26.3",
+        "babel-loader": "^7.1.5",
+        "babel-preset-react": "^6.24.1",
+        "babel-preset-stage-2": "^6.24.1",
+        "css-loader": "^1.0.0",
+        "node-sass": "^4.9.3",
+        "react-hot-loader": "^4.3.3",
+        "sass-loader": "^7.1.0",
+        "style-loader": "^0.23.0",
+        "webpack": "^4.15.1",
+        "webpack-cli": "^3.0.8",
+        "webpack-dev-server": "^3.1.4"
+    },
+    "dependencies": {
+        "babel-preset-env": "^1.7.0",
+        "coffeescript": "^2.3.2",
+        "react": "^16.4.1",
+        "react-dom": "^16.4.1"
+    }
+}
