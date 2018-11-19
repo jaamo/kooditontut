@@ -10,19 +10,47 @@ export default class Store {
     @observable
     sourceTree = [];
     @observable
-    elf = { x: 0, y: 0 };
-    run(src) {
-        this.sourceTree = parse(src);
-        console.log(this.sourceTree);
+    elf = { x: 0, y: 0, direction: 'up' };
+
+    async execute(tree, level = 0) {
+        for (let line of tree) {
+            console.log(level + ' ' + line.command);
+            this.runCommand(line.command);
+            if (line.tree.length > 0) {
+                await this.execute(line.tree, level + 1);
+            }
+            await timeout(1000);
+        }
     }
 
-    moveElfRight() {
-        this.elf.x++;
+    runCommand(command) {
+        switch (command) {
+            case 'up':
+            case 'down':
+            case 'left':
+            case 'right':
+                this.elf.direction = command;
+                break;
+            case 'move':
+                this.move();
+                break;
+        }
     }
 
-    async moi() {
-        console.log('moi 1');
-        await timeout(5000);
-        console.log('moi 2');
+    move() {
+        switch (this.elf.direction) {
+            case 'up':
+                this.elf.y--;
+                break;
+            case 'down':
+                this.elf.y++;
+                break;
+            case 'left':
+                this.elf.x--;
+                break;
+            case 'right':
+                this.elf.x++;
+                break;
+        }
     }
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
+import parse from '../lib/parser.js';
 
 @observer
 class Challenge extends React.Component {
@@ -20,16 +21,11 @@ repeat 5 times
 up
 jump`;
 
-        source = `down
-up`;
+        // Parse source.
+        const tree = parse(source);
 
-        this.props.store.moi();
-
-        //this.props.store.run(source);
-        setTimeout(() => {
-            console.log('pihviii');
-            this.props.store.title = 'pihvi';
-        }, 2000);
+        // Run command.
+        this.props.store.execute(tree);
     }
 
     render() {
@@ -41,6 +37,7 @@ up`;
                 <br />
                 x: {store.elf.x} <br />
                 y: {store.elf.y} <br />
+                direction: {store.elf.direction} <br />
                 <textarea defaultValue="moi" />
             </div>
         );
