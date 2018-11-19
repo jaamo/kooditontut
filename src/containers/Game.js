@@ -12,7 +12,7 @@ class Game extends React.Component {
         return (
             <div>
                 lol
-                <Challenge />
+                <Challenge store={this.props.store} />
             </div>
         );
     }
