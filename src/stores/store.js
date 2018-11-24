@@ -11,6 +11,12 @@ export default class Store {
     @observable
     elf = { x: 5, y: 5, direction: 'up' };
 
+    @observable
+    cookies = [{ x: 4, y: 4 }, { x: 4, y: 2 }];
+
+    @observable
+    score: 0;
+
     // 0 = not available
     // 1 = free space
     // 2 obstacle
@@ -36,6 +42,7 @@ export default class Store {
         for (let line of tree) {
             console.log(level + ' ' + line.command);
             this.runCommand(line.command);
+            this.checkCookie();
             if (line.tree.length > 0) {
                 await this.execute(line.tree, level + 1);
             }
@@ -57,6 +64,22 @@ export default class Store {
             case 'move':
                 this.move();
                 break;
+        }
+    }
+
+    /**
+     * Check if player is on cookie.
+     */
+    checkCookie() {
+        // Elf is on cookie!
+        if (
+            this.cookies.length > 0 &&
+            this.cookies[0].x == this.elf.x &&
+            this.cookies[0].y == this.elf.y
+        ) {
+            console.log('PISTE');
+            this.cookies.shift();
+            this.score++;
         }
     }
 

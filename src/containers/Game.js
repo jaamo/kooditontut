@@ -5,6 +5,7 @@ import { observer } from 'mobx-react';
 import Challenge from '../components/Challenge.js';
 import Cell from '../components/Cell.js';
 import Elf from '../components/Elf.js';
+import Cookie from '../components/Cookie.js';
 import { STYLE_CELL_WIDTH } from '../constants/styles.js';
 
 // https://www.colourlovers.com/palette/130451/Tis_the_Season
@@ -83,6 +84,9 @@ class Game extends React.Component {
                             ))
                         )}
                         <Elf elf={store.elf} x={store.elf.x} y={store.elf.y} />
+                        {store.cookies.map((cookie, i) => (
+                            <Cookie key={i} x={cookie.x} y={cookie.y} />
+                        ))}
                     </Map>
                 </GridColumn>
             </Grid>
