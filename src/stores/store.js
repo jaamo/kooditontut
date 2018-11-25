@@ -12,10 +12,13 @@ export default class Store {
     elf = { x: 5, y: 5, direction: 'up' };
 
     @observable
-    cookies = [{ x: 4, y: 4 }, { x: 4, y: 2 }];
+    cookies = [{ x: 4, y: 4 }, { x: 4, y: 3 }];
 
     @observable
     score: 0;
+
+    @observable
+    success: false;
 
     // 0 = not available
     // 1 = free space
@@ -39,10 +42,14 @@ export default class Store {
      * Synchronously execute all commands in command tree.
      */
     async execute(tree, level = 0) {
+        this.success = false;
         for (let line of tree) {
             console.log(level + ' ' + line.command);
             this.runCommand(line.command);
             this.checkCookie();
+            if (this.success) {
+                return;
+            }
             if (line.tree.length > 0) {
                 await this.execute(line.tree, level + 1);
             }
@@ -80,6 +87,9 @@ export default class Store {
             console.log('PISTE');
             this.cookies.shift();
             this.score++;
+            if (this.cookies.length == 0) {
+                this.success = true;
+            }
         }
     }
 

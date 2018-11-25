@@ -6,6 +6,7 @@ import Challenge from '../components/Challenge.js';
 import Cell from '../components/Cell.js';
 import Elf from '../components/Elf.js';
 import Cookie from '../components/Cookie.js';
+import Modal from '../components/Modal.js';
 import { STYLE_CELL_WIDTH } from '../constants/styles.js';
 
 // https://www.colourlovers.com/palette/130451/Tis_the_Season
@@ -57,6 +58,9 @@ const Map = styled.div`
 class Game extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            angles: []
+        };
     }
 
     componentDidMount() {}
@@ -66,6 +70,7 @@ class Game extends React.Component {
         return (
             <Grid>
                 <GlobalStyle />
+                {store.success && <Modal />}
                 <GridColumn>
                     <Challenge store={store} />
                 </GridColumn>
@@ -79,7 +84,7 @@ class Game extends React.Component {
                                     type={cell}
                                     x={x}
                                     y={y}
-                                    angle={-10 + Math.random() * 20}
+                                    angle={0}
                                 />
                             ))
                         )}
