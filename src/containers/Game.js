@@ -6,6 +6,8 @@ import Challenge from '../components/Challenge.js';
 import Cell from '../components/Cell.js';
 import Elf from '../components/Elf.js';
 import Cookie from '../components/Cookie.js';
+import Calendar from '../components/Calendar.js';
+import BackButton from '../components/BackButton.js';
 import Modal from '../components/Modal.js';
 import { STYLE_CELL_WIDTH } from '../constants/styles.js';
 
@@ -24,25 +26,36 @@ body {
     font-family: 'Mountains of Christmas', cursive;
     color: #FFEFB9;
     font-size: 2rem;
+
 }
 h1 {
     font-weight: 700;
 }
 `;
 
-const Grid = styled.div`
-    display: flex;
+const Container = styled.div`
     position: absolute;
     left: 0;
     right: 0;
     top: 0;
     bottom: 0;
+    overflow: hidden;
+`;
+
+const Grid = styled.div`
+    display: flex;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 200%;
     align-items: stretch;
+    transition: left 1s cubic-bezier(0.28, 0.96, 0.17, 1);
 `;
 
 const GridColumn = styled.div`
     flex-grow: 1;
-    width: 50%;
+    width: 25%;
     padding: 2rem;
     display: flex;
     align-items: center;
@@ -63,38 +76,71 @@ class Game extends React.Component {
         };
     }
 
-    componentDidMount() {}
+    changeView(view) {
+        this.props.store.currentView = view;
+    }
+
+    componentDidMount() {
+        this.props.store.currentView = 'calendar';
+    }
 
     render() {
         const { store } = this.props;
         return (
-            <Grid>
-                <GlobalStyle />
-                {store.success && <Modal />}
-                <GridColumn>
-                    <Challenge store={store} />
-                </GridColumn>
-                <GridColumn>
-                    <Map>
-                        {store.arena.map((row, y) =>
-                            row.map((cell, x) => (
-                                <Cell
-                                    key={x + '-' + y}
-                                    paska="red"
-                                    type={cell}
-                                    x={x}
-                                    y={y}
-                                    angle={0}
-                                />
-                            ))
-                        )}
-                        <Elf elf={store.elf} x={store.elf.x} y={store.elf.y} />
-                        {store.cookies.map((cookie, i) => (
-                            <Cookie key={i} x={cookie.x} y={cookie.y} />
-                        ))}
-                    </Map>
-                </GridColumn>
-            </Grid>
+            <Container>
+                <Grid
+                    style={{
+                        left: store.currentView == 'calendar' ? '0' : '-100%'
+                    }}
+                >
+                    <GlobalStyle />
+                    {store.success && <Modal />}
+                    <GridColumn>
+                        <div>
+                            <h1>Kooditontut</h1>
+                            <p>
+                                Tämä jälkimmäinen etu ja kunnia on Tuomaan, joka
+                                oikein on kuuluisa hartioittensa levyyden
+                                tähden. Omituisuus, joka heitä kaikkia
+                                yhteisesti merkitsee, on heidän ruskea ihonsa ja
+                                kankea, hampunkarvainen tukkansa, jonka karheus
+                                etenkin Juhanilla on silmään pistävä.
+                            </p>
+                        </div>
+                    </GridColumn>
+                    <GridColumn>
+                        <Calendar changeView={view => this.changeView(view)} />
+                    </GridColumn>
+                    <GridColumn>
+                        <Challenge store={store} />
+                    </GridColumn>
+                    <BackButton onClick={e => this.changeView('calendar')} />
+                    <GridColumn>
+                        <Map>
+                            {store.arena.map((row, y) =>
+                                row.map((cell, x) => (
+                                    <Cell
+                                        key={x + '-' + y}
+                                        paska="red"
+                                        type={cell}
+                                        x={x}
+                                        y={y}
+                                        angle={0}
+                                    />
+                                ))
+                            )}
+                            <Elf
+                                elf={store.elf}
+                                x={store.elf.x}
+                                y={store.elf.y}
+                            />
+                            {store.cookies.map((cookie, i) => (
+                                <Cookie key={i} x={cookie.x} y={cookie.y} />
+                            ))}
+                        </Map>
+                    </GridColumn>
+                </Grid>
+            </Container>
         );
     }
 }

@@ -20,6 +20,9 @@ export default class Store {
     @observable
     success: false;
 
+    @observable
+    currentView: 'calendar';
+
     // 0 = not available
     // 1 = free space
     // 2 obstacle
