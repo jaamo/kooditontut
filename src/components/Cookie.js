@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import cookieImage from '../img/cookie.svg';
 import { STYLE_CELL_WIDTH } from '../constants/styles.js';
 
 const StyledCookie = styled.div`
@@ -22,7 +21,7 @@ class Cookie extends React.Component {
         const { x, y } = this.props;
         return (
             <StyledCookie x={x} y={y}>
-                <span dangerouslySetInnerHTML={{ __html: cookieImage }} />
+                <img src="/img/cookie.svg" />
             </StyledCookie>
         );
     }

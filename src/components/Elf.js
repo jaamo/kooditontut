@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import elfImage from '../img/elf.svg';
 import { STYLE_CELL_WIDTH } from '../constants/styles.js';
 
 const StyledElf = styled.div`
@@ -22,7 +21,7 @@ class Elf extends React.Component {
         const { elf } = this.props;
         return (
             <StyledElf elf={elf}>
-                <span dangerouslySetInnerHTML={{ __html: elfImage }} />
+                <img src="/img/elf.svg" />
             </StyledElf>
         );
     }
