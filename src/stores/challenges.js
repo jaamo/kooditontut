@@ -12,7 +12,7 @@ export const challenges = {
         move
             </p>
             <p>
-                Klikkaa Näytä koodi -nappia ja kokeile käynnistää ohjelma.
+                Klikkaa Koodaamaan! -nappia ja kokeile käynnistää ohjelma.
             </p>`,
 
         cookies: [{ x: 5, y: 3 }],
