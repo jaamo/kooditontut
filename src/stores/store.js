@@ -151,7 +151,6 @@ export default class Store {
             this.cookies[0].x == this.elf.x &&
             this.cookies[0].y == this.elf.y
         ) {
-            console.log('PISTE');
             this.cookies.shift();
 
             // All cookies found!

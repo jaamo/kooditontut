@@ -27,6 +27,7 @@ const Title = styled.h1`
 `;
 
 const Description = styled.div`
+    font-size: 1.6rem;
     .code {
         font-family: 'Share Tech Mono', monospace;
         padding-left: 1rem;
@@ -36,7 +37,7 @@ const Description = styled.div`
 
 const CodeArea = styled.textarea`
     font-family: 'Share Tech Mono', monospace;
-    width: 40rem;
+    width: 30rem;
     height: 20rem;
     display: block;
     border: 0;
