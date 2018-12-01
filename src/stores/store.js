@@ -109,7 +109,9 @@ export default class Store {
 
     pickDate(date) {
         this.selectedDay = date;
-        this.elf = challenges[date].elf;
+        this.elf.x = challenges[date].elf.x;
+        this.elf.y = challenges[date].elf.y;
+        this.elf.direction = challenges[date].elf.direction;
         this.cookies = challenges[date].cookies;
         this.arena = challenges[date].arena;
         this.defaultSource = challenges[date].defaultSource;
@@ -123,6 +125,9 @@ export default class Store {
     async execute(tree, level = 0) {
         this.success = false;
         this.failure = false;
+        this.elf.x = challenges[this.selectedDay].elf.x;
+        this.elf.y = challenges[this.selectedDay].elf.y;
+        this.elf.direction = challenges[this.selectedDay].elf.direction;
         for (let line of tree) {
             console.log(level + ' ' + line.command);
             this.runCommand(line.command);
