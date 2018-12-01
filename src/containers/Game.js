@@ -153,6 +153,7 @@ class Game extends React.Component {
                                     elf={store.elf}
                                     x={store.elf.x}
                                     y={store.elf.y}
+                                    direction={store.elf.direction}
                                 />
                                 {store.cookies.map((cookie, i) => (
                                     <Cookie key={i} x={cookie.x} y={cookie.y} />
