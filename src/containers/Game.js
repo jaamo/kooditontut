@@ -22,7 +22,9 @@ const GlobalStyle = createGlobalStyle`
 body {
     margin: 0;
     padding: 0;
-    background: #34502B;
+        background: #34502B;
+        background-image: url(/img/bg.svg);
+        background-size: 15rem 15rem;
     font-family: 'Mountains of Christmas', cursive;
     color: #FFEFB9;
     font-size: 2rem;
@@ -66,6 +68,16 @@ const Map = styled.div`
     height: calc(11 * 4rem);
     position: relative;
 `;
+const Decoration = styled.div`
+    position: absolute;
+    left: ${props => props.left};
+    right: ${props => props.right};
+    top: ${props => props.top};
+    z-index: 1000;
+    img {
+        width: ${props => props.width};
+    }
+`;
 
 @observer
 class Game extends React.Component {
@@ -86,6 +98,12 @@ class Game extends React.Component {
         const { store } = this.props;
         return (
             <div>
+                <Decoration left="-1rem" top="20%" width="4rem">
+                    <img src="/img/cookiedude.svg" />
+                </Decoration>
+                <Decoration right="-3rem" top="80%" width="8rem">
+                    <img src="/img/present.svg" />
+                </Decoration>
                 {store.success && (
                     <Modal
                         message="WOW! Sait kerättyä kaikki piparit!"

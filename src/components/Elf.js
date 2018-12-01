@@ -30,6 +30,13 @@ const StyledElf = styled.div`
     transition: all 0.4s ease-out;
     transform: rotate(${props => directionToAngle(props.elf.direction)});
 `;
+const ElfSprite = styled.img`
+    position: absolute;
+`;
+const ElfShadowSprite = styled.img`
+    position: absolute;
+    transform: scale(1.05) translatex(0.1rem) translatey(0.1rem);
+`;
 
 class Elf extends React.Component {
     constructor(props) {
@@ -43,7 +50,8 @@ class Elf extends React.Component {
         console.log(elf.direction);
         return (
             <StyledElf elf={elf}>
-                <img src="/img/elf.svg" />
+                <ElfShadowSprite src="/img/elf-shadow.svg" />
+                <ElfSprite src="/img/elf.svg" />
             </StyledElf>
         );
     }
