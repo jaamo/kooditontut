@@ -37,7 +37,7 @@ class Modal extends React.Component {
                         WOW! Sait kerättyä kaikki piparit!{' '}
                         <b>Onneksi olkoon!</b>
                     </p>
-                    <Button onClick={() => this.runProgram()}>Jatka</Button>
+                    <Button onClick={this.props.onClick}>Jatka</Button>
                 </ModalWindow>
             </Backdrop>
         );

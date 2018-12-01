@@ -30,7 +30,7 @@ class Calendar extends React.Component {
         let days = [];
         for (let i = 1; i <= 24; i++) {
             days.push(
-                <Day key={i} onClick={() => this.props.changeView('challenge')}>
+                <Day key={i} onClick={() => this.props.pickDate(i)}>
                     {i}
                 </Day>
             );

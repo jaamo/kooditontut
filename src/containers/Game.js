@@ -77,70 +77,74 @@ class Game extends React.Component {
     }
 
     changeView(view) {
-        this.props.store.currentView = view;
+        this.props.store.changeView(view);
     }
 
-    componentDidMount() {
-        this.props.store.currentView = 'calendar';
-    }
+    componentDidMount() {}
 
     render() {
         const { store } = this.props;
         return (
-            <Container>
-                <Grid
-                    style={{
-                        left: store.currentView == 'calendar' ? '0' : '-100%'
-                    }}
-                >
-                    <GlobalStyle />
-                    {store.success && <Modal />}
-                    <GridColumn>
-                        <div>
-                            <h1>Kooditontut</h1>
-                            <p>
-                                Tämä jälkimmäinen etu ja kunnia on Tuomaan, joka
-                                oikein on kuuluisa hartioittensa levyyden
-                                tähden. Omituisuus, joka heitä kaikkia
-                                yhteisesti merkitsee, on heidän ruskea ihonsa ja
-                                kankea, hampunkarvainen tukkansa, jonka karheus
-                                etenkin Juhanilla on silmään pistävä.
-                            </p>
-                        </div>
-                    </GridColumn>
-                    <GridColumn>
-                        <Calendar changeView={view => this.changeView(view)} />
-                    </GridColumn>
-                    <GridColumn>
-                        <Challenge store={store} />
-                    </GridColumn>
-                    <BackButton onClick={e => this.changeView('calendar')} />
-                    <GridColumn>
-                        <Map>
-                            {store.arena.map((row, y) =>
-                                row.map((cell, x) => (
-                                    <Cell
-                                        key={x + '-' + y}
-                                        paska="red"
-                                        type={cell}
-                                        x={x}
-                                        y={y}
-                                        angle={0}
-                                    />
-                                ))
-                            )}
-                            <Elf
-                                elf={store.elf}
-                                x={store.elf.x}
-                                y={store.elf.y}
-                            />
-                            {store.cookies.map((cookie, i) => (
-                                <Cookie key={i} x={cookie.x} y={cookie.y} />
-                            ))}
-                        </Map>
-                    </GridColumn>
-                </Grid>
-            </Container>
+            <div>
+                {store.success && (
+                    <Modal onClick={() => this.changeView('calendar')} />
+                )}
+                <Container>
+                    <Grid
+                        style={{
+                            left:
+                                store.currentView == 'calendar' ? '0' : '-100%'
+                        }}
+                    >
+                        <GlobalStyle />
+                        <GridColumn>
+                            <div>
+                                <h1>Kooditonttu</h1>
+                                <p>
+                                    Apua! Tonttu Bittiparta on jäänyt jumiin
+                                    tietokoneen uumeniin! Sinun tehtäväsi on
+                                    koodata ohjelma, joka auttaa tontun piparin
+                                    luo. Kun kaikki piparit ovat löytyneet,
+                                    tonttu vapautuu koneen syövereistä.
+                                </p>
+                                <p>Aloita valitsemalla päivä kalenterista.</p>
+                            </div>
+                        </GridColumn>
+                        <GridColumn>
+                            <Calendar pickDate={date => store.pickDate(date)} />
+                        </GridColumn>
+                        <GridColumn>
+                            <Challenge store={store} />
+                        </GridColumn>
+                        <BackButton
+                            onClick={e => this.changeView('calendar')}
+                        />
+                        <GridColumn>
+                            <Map>
+                                {store.arena.map((row, y) =>
+                                    row.map((cell, x) => (
+                                        <Cell
+                                            key={x + '-' + y}
+                                            type={cell}
+                                            x={x}
+                                            y={y}
+                                            angle={0}
+                                        />
+                                    ))
+                                )}
+                                <Elf
+                                    elf={store.elf}
+                                    x={store.elf.x}
+                                    y={store.elf.y}
+                                />
+                                {store.cookies.map((cookie, i) => (
+                                    <Cookie key={i} x={cookie.x} y={cookie.y} />
+                                ))}
+                            </Map>
+                        </GridColumn>
+                    </Grid>
+                </Container>
+            </div>
         );
     }
 }

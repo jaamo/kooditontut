@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import elfImage from '../img/elf.svg';
 import { STYLE_CELL_WIDTH } from '../constants/styles.js';
 
 const StyledElf = styled.div`
@@ -8,7 +9,6 @@ const StyledElf = styled.div`
     height: ${STYLE_CELL_WIDTH}rem;
     left: ${props => props.elf.x * STYLE_CELL_WIDTH}rem;
     top: ${props => props.elf.y * STYLE_CELL_WIDTH}rem;
-    background-color: green;
 `;
 
 class Elf extends React.Component {
@@ -22,7 +22,7 @@ class Elf extends React.Component {
         const { elf } = this.props;
         return (
             <StyledElf elf={elf}>
-                {elf.x}/{elf.y}
+                <span dangerouslySetInnerHTML={{ __html: elfImage }} />
             </StyledElf>
         );
     }

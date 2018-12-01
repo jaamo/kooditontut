@@ -1,5 +1,6 @@
 import { observable, computed, reaction } from 'mobx';
 import parse from '../lib/parser.js';
+import { challenges } from './challenges.js';
 
 /**
  * Synchronous timeout function.
@@ -12,34 +13,51 @@ export default class Store {
     elf = { x: 5, y: 5, direction: 'up' };
 
     @observable
-    cookies = [{ x: 4, y: 4 }, { x: 4, y: 3 }];
+    cookies = [];
 
     @observable
-    score: 0;
+    success = false;
 
     @observable
-    success: false;
-
-    @observable
-    currentView: 'calendar';
+    currentView = 'calendar';
 
     // 0 = not available
     // 1 = free space
     // 2 obstacle
     @observable
-    arena = [
-        [1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    ];
+    arena = [];
+
+    @observable
+    description = '';
+
+    // Saved source codes.
+    sources = {};
+
+    // Passed days.
+    passedChallenges = [];
+
+    // Current day.
+    currentDay = 0;
+
+    // Default source code.
+    defaultSource = '';
+
+    constructor() {}
+
+    changeView(view) {
+        this.success = false;
+        this.currentView = view;
+    }
+
+    pickDate(date) {
+        this.currentDay = date;
+        this.elf = challenges[date].elf;
+        this.cookies = challenges[date].cookies;
+        this.arena = challenges[date].arena;
+        this.defaultSource = challenges[date].defaultSource;
+        this.description = challenges[date].description;
+        this.changeView('challenge');
+    }
 
     /**
      * Synchronously execute all commands in command tree.
@@ -89,8 +107,10 @@ export default class Store {
         ) {
             console.log('PISTE');
             this.cookies.shift();
-            this.score++;
+
+            // All cookies found!
             if (this.cookies.length == 0) {
+                this.passedChallenges.push(this.currentDay);
                 this.success = true;
             }
         }

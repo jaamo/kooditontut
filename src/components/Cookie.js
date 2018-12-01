@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import cookieImage from '../img/cookie.svg';
 import { STYLE_CELL_WIDTH } from '../constants/styles.js';
 
 const StyledCookie = styled.div`
@@ -8,7 +9,6 @@ const StyledCookie = styled.div`
     height: ${STYLE_CELL_WIDTH}rem;
     left: ${props => props.x * STYLE_CELL_WIDTH}rem;
     top: ${props => props.y * STYLE_CELL_WIDTH}rem;
-    background-color: blue;
 `;
 
 class Cookie extends React.Component {
@@ -20,7 +20,11 @@ class Cookie extends React.Component {
 
     render() {
         const { x, y } = this.props;
-        return <StyledCookie x={x} y={y} />;
+        return (
+            <StyledCookie x={x} y={y}>
+                <span dangerouslySetInnerHTML={{ __html: cookieImage }} />
+            </StyledCookie>
+        );
     }
 }
 

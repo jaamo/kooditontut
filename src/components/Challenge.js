@@ -26,10 +26,12 @@ const Title = styled.h1`
     transform: rotate(${-10 + Math.random() * 20}deg);
 `;
 
-const CodeSample = styled.div`
-    font-family: 'Share Tech Mono', monospace;
-    padding-left: 1rem;
-    font-size: 1.6rem;
+const Description = styled.div`
+    .code {
+        font-family: 'Share Tech Mono', monospace;
+        padding-left: 1rem;
+        font-size: 1.6rem;
+    }
 `;
 
 const CodeArea = styled.textarea`
@@ -56,19 +58,6 @@ class Challenge extends React.Component {
     componentDidMount() {}
 
     runProgram() {
-        //right
-        //move
-        //left
-        //move
-        //repeat 5 times
-        //  move
-        //  right
-        //  move
-        //  if can move
-        //    move
-        //up
-        //jump`;
-
         // Get source.
         const source = this.sourceRef.current.value;
         console.log(source);
@@ -87,41 +76,31 @@ class Challenge extends React.Component {
                 {this.state.showInfo && (
                     <div>
                         <Title>1. päivä</Title>
-                        <p>
-                            Veljesten nimet vanhimmasta nuorimpaan ovat: Juhani,
-                            Tuomas, Aapo, Simeoni, Timo, Lauri ja Eero. Ovat
-                            heistä Tuomas ja Aapo kaksoispari ja samoin Timo ja
-                            Lauri.
-                        </p>
-                        <CodeSample>
-                            up
-                            <br />
-                            move
-                            <br />
-                        </CodeSample>
-                        <p>
-                            Heidän isäänsä, joka oli ankaran innokas metsämies,
-                            kohtasi hänen parhaassa iässään äkisti surma, kun
-                            hän tappeli äkeän karhun kanssa. Molemmat silloin,
-                            niin metsän kontio kuin mies, löyttiin kuolleina.
-                        </p>
+                        <Description
+                            dangerouslySetInnerHTML={{
+                                __html: store.description
+                            }}
+                        />
                         <Button
                             onClick={() => this.setState({ showInfo: false })}
                         >
-                            Näytä koodi
+                            Koodaamaan!
                         </Button>
                     </div>
                 )}
                 {!this.state.showInfo && (
                     <div>
-                        <CodeArea ref={this.sourceRef} defaultValue="" />
+                        <CodeArea
+                            ref={this.sourceRef}
+                            defaultValue={store.defaultSource}
+                        />
                         <Button
                             onClick={() => this.setState({ showInfo: true })}
                         >
-                            Näytä ohje
+                            Ohjeeseen
                         </Button>
                         <Button onClick={() => this.runProgram()}>
-                            Käynnistä ohjelma
+                            Käynnistä!
                         </Button>
                     </div>
                 )}
