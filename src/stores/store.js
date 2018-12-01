@@ -46,11 +46,33 @@ export default class Store {
     @observable
     currentDate = new Date();
 
-    constructor() {}
+    constructor() {
+        // Load passed challenges from local storage.
+        const passedChallenges = window.localStorage.getItem(
+            'passedChallenges'
+        );
+        if (passedChallenges) {
+            this.passedChallenges = passedChallenges;
+        }
+    }
 
     changeView(view) {
         this.success = false;
         this.currentView = view;
+    }
+
+    setChallengePassed(day) {
+        if (this.passedChallenges.indexOf(day) == -1) {
+            this.passedChallenges.push(day);
+            window.localStorage.setItem(
+                'passedChallenges',
+                this.passedChallenges
+            );
+        }
+    }
+
+    isChallegePassed(day) {
+        return this.passedChallenges.indexOf(day) != -1;
     }
 
     pickDate(date) {
@@ -114,7 +136,7 @@ export default class Store {
 
             // All cookies found!
             if (this.cookies.length == 0) {
-                this.passedChallenges.push(this.selectedDay);
+                this.setChallengePassed(this.selectedDay);
                 this.success = true;
             }
         }

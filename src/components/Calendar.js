@@ -8,6 +8,7 @@ const StyledCalendar = styled.div`
 `;
 
 const Day = styled.div`
+    position: relative;
     width: 6rem;
     height: 6rem;
     background: #ffefb9;
@@ -19,9 +20,26 @@ const Day = styled.div`
     font-weight: 700;
     box-shadow: 0.4rem 0.4rem 0 rgba(0, 0, 0, 1);
     transform: rotate(${props => props.angle}deg);
+    ::after {
+        position: absolute;
+        display: ${props => (props.isDayActive ? 'block' : 'none')};
+        content: 'OK!';
+        background: green;
+        font-family: arial;
+        font-size: 12px;
+        color: white;
+        width: 3rem;
+        height: 3rem;
+        line-height: 3rem;
+        border-radius: 4rem;
+        bottom: 0;
+        right: 0;
+        transform: translatex(0.5rem) translateY(0.5rem);
+    }
 `;
 
 const DisabledDay = styled.div`
+    position: relative;
     width: 6rem;
     height: 6rem;
     background: #d1d1d1;
@@ -52,6 +70,7 @@ class Calendar extends React.Component {
                     <Day
                         key={i}
                         angle={angle}
+                        isDayActive={this.props.isChallegePassed(i)}
                         onClick={() => this.props.pickDate(i)}
                     >
                         {i}

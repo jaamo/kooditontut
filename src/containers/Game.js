@@ -113,6 +113,9 @@ class Game extends React.Component {
                         <GridColumn>
                             <Calendar
                                 pickDate={date => store.pickDate(date)}
+                                isChallegePassed={day =>
+                                    store.isChallegePassed(day)
+                                }
                                 currentDate={store.currentDate}
                             />
                         </GridColumn>
