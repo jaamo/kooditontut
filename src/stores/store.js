@@ -53,60 +53,98 @@ export default class Store {
     currentDate = new Date();
 
     constructor() {
-        // Load passed challenges from local storage.
-        const passedChallenges = window.localStorage.getItem(
-            'passedChallenges'
-        );
-        if (passedChallenges) {
-            this.passedChallenges = passedChallenges;
+        // Load data from local storage.
+        try {
+            // Load passed challenges from local storage.
+            const passedChallengesData = window.localStorage.getItem(
+                'passedChallenges'
+            );
+            const passedChallenges = JSON.parse(passedChallengesData);
+            if (passedChallenges && Array.isArray(passedChallenges)) {
+                this.passedChallenges = passedChallenges;
+            } else {
+                this.passedChallenges = [];
+            }
+        } catch (e) {
+            this.passedChallenges = [];
+            console.log(e);
         }
         try {
             // Load save source from local storage
             const sourcesData = window.localStorage.getItem('sources');
             const sources = JSON.parse(sourcesData);
-            if (sources) {
+            if (sources && typeof sources == 'object') {
                 this.sources = sources;
+            } else {
+                this.sources = {};
             }
         } catch (e) {
+            this.sources = {};
             console.log(e);
+        }
+
+        // Debug. Enable all dates.
+        if (window.location.toString().indexOf('debug') !== -1) {
+            this.currentDate = new Date(2019, 1, 1);
         }
     }
 
+    /**
+     * Change between two main views.
+     */
     changeView(view) {
         this.success = false;
         this.failure = false;
         this.currentView = view;
     }
 
+    /**
+     * Add given day to passed challenges list. Update also to local storage.
+     */
     setChallengePassed(day) {
         if (this.passedChallenges.indexOf(day) == -1) {
             this.passedChallenges.push(day);
             window.localStorage.setItem(
                 'passedChallenges',
-                this.passedChallenges
+                JSON.stringify(this.passedChallenges)
             );
         }
     }
 
+    /**
+     * Test if given day is passed.
+     */
     isChallegePassed(day) {
         return this.passedChallenges.indexOf(day) != -1;
     }
 
+    /**
+     * Save source to local storage.
+     */
     setSource(day, source) {
         this.sources[day] = source;
         window.localStorage.setItem('sources', JSON.stringify(this.sources));
     }
 
+    /**
+     * Get source for given day.
+     */
     getSource(day) {
         console.log(this.sources);
         return this.sources[day] ? this.sources[day] : false;
     }
 
+    /**
+     * Set application to failed state.
+     */
     setFailure(message) {
         this.failure = true;
         this.failureMessage = message;
     }
 
+    /**
+     * Activate give date.
+     */
     pickDate(date) {
         this.selectedDay = date;
         this.cookies = challenges[date].cookies;
