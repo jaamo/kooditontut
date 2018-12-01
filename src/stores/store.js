@@ -54,6 +54,16 @@ export default class Store {
         if (passedChallenges) {
             this.passedChallenges = passedChallenges;
         }
+        try {
+            // Load save source from local storage
+            const sourcesData = window.localStorage.getItem('sources');
+            const sources = JSON.parse(sourcesData);
+            if (sources) {
+                this.sources = sources;
+            }
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     changeView(view) {
@@ -73,6 +83,16 @@ export default class Store {
 
     isChallegePassed(day) {
         return this.passedChallenges.indexOf(day) != -1;
+    }
+
+    setSource(day, source) {
+        this.sources[day] = source;
+        window.localStorage.setItem('sources', JSON.stringify(this.sources));
+    }
+
+    getSource(day) {
+        console.log(this.sources);
+        return this.sources[day] ? this.sources[day] : false;
     }
 
     pickDate(date) {

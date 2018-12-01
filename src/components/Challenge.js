@@ -60,7 +60,9 @@ class Challenge extends React.Component {
     runProgram() {
         // Get source.
         const source = this.sourceRef.current.value;
-        console.log(source);
+
+        // Save source.
+        this.props.store.setSource(this.props.store.selectedDay, source);
 
         // Parse source.
         const tree = parse(source);
@@ -92,7 +94,10 @@ class Challenge extends React.Component {
                     <div>
                         <CodeArea
                             ref={this.sourceRef}
-                            defaultValue={store.defaultSource}
+                            defaultValue={
+                                store.getSource(store.selectedDay) ||
+                                store.defaultSource
+                            }
                         />
                         <Button
                             onClick={() => this.setState({ showInfo: true })}
