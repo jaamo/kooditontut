@@ -36,11 +36,15 @@ export default class Store {
     // Passed days.
     passedChallenges = [];
 
-    // Current day.
-    currentDay = 0;
+    // Selected day.
+    selectedDay = 0;
 
     // Default source code.
     defaultSource = '';
+
+    // RRRIGHT NOW!
+    @observable
+    currentDate = new Date();
 
     constructor() {}
 
@@ -50,7 +54,7 @@ export default class Store {
     }
 
     pickDate(date) {
-        this.currentDay = date;
+        this.selectedDay = date;
         this.elf = challenges[date].elf;
         this.cookies = challenges[date].cookies;
         this.arena = challenges[date].arena;
@@ -110,7 +114,7 @@ export default class Store {
 
             // All cookies found!
             if (this.cookies.length == 0) {
-                this.passedChallenges.push(this.currentDay);
+                this.passedChallenges.push(this.selectedDay);
                 this.success = true;
             }
         }

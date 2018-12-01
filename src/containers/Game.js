@@ -99,7 +99,7 @@ class Game extends React.Component {
                         <GlobalStyle />
                         <GridColumn>
                             <div>
-                                <h1>Kooditonttu</h1>
+                                <h1>Tonttu Bittiparran joulukalenteri</h1>
                                 <p>
                                     Apua! Tonttu Bittiparta on jäänyt jumiin
                                     tietokoneen uumeniin! Sinun tehtäväsi on
@@ -111,7 +111,10 @@ class Game extends React.Component {
                             </div>
                         </GridColumn>
                         <GridColumn>
-                            <Calendar pickDate={date => store.pickDate(date)} />
+                            <Calendar
+                                pickDate={date => store.pickDate(date)}
+                                currentDate={store.currentDate}
+                            />
                         </GridColumn>
                         <GridColumn>
                             <Challenge store={store} />
