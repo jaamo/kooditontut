@@ -42,6 +42,12 @@ export default class Store {
     // Default source code.
     defaultSource = '';
 
+    @observable
+    failure = false;
+
+    @observable
+    failureMessage = '';
+
     // RRRIGHT NOW!
     @observable
     currentDate = new Date();
@@ -68,6 +74,7 @@ export default class Store {
 
     changeView(view) {
         this.success = false;
+        this.failure = false;
         this.currentView = view;
     }
 
@@ -95,6 +102,11 @@ export default class Store {
         return this.sources[day] ? this.sources[day] : false;
     }
 
+    setFailure(message) {
+        this.failure = true;
+        this.failureMessage = message;
+    }
+
     pickDate(date) {
         this.selectedDay = date;
         this.elf = challenges[date].elf;
@@ -110,11 +122,12 @@ export default class Store {
      */
     async execute(tree, level = 0) {
         this.success = false;
+        this.failure = false;
         for (let line of tree) {
             console.log(level + ' ' + line.command);
             this.runCommand(line.command);
             this.checkCookie();
-            if (this.success) {
+            if (this.success || this.failure) {
                 return;
             }
             if (line.tree.length > 0) {
@@ -137,6 +150,10 @@ export default class Store {
                 break;
             case 'move':
                 this.move();
+                break;
+            default:
+                this.setFailure('Tuntematon komento: ' + command);
+                this.failure = true;
                 break;
         }
     }

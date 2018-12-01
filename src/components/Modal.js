@@ -16,7 +16,7 @@ const Backdrop = styled.div`
 `;
 
 const ModalWindow = styled.div`
-    background: #34502b;
+    background: ${props => (props.type == 'success' ? '#34502b' : '#811414')};
     display: inline-block;
     padding: 4rem;
     text-align: center;
@@ -32,11 +32,8 @@ class Modal extends React.Component {
     render() {
         return (
             <Backdrop>
-                <ModalWindow>
-                    <p>
-                        WOW! Sait kerättyä kaikki piparit!{' '}
-                        <b>Onneksi olkoon!</b>
-                    </p>
+                <ModalWindow type={this.props.type}>
+                    <p>{this.props.message}</p>
                     <Button onClick={this.props.onClick}>Jatka</Button>
                 </ModalWindow>
             </Backdrop>

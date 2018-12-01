@@ -87,7 +87,18 @@ class Game extends React.Component {
         return (
             <div>
                 {store.success && (
-                    <Modal onClick={() => this.changeView('calendar')} />
+                    <Modal
+                        message="WOW! Sait kerättyä kaikki piparit!"
+                        type="success"
+                        onClick={() => this.changeView('calendar')}
+                    />
+                )}
+                {store.failure && (
+                    <Modal
+                        message={store.failureMessage}
+                        type="error"
+                        onClick={() => this.changeView('challenge')}
+                    />
                 )}
                 <Container>
                     <Grid
