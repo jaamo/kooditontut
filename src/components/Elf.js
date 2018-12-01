@@ -2,6 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { STYLE_CELL_WIDTH } from '../constants/styles.js';
 
+/**
+ * Rotate elf based on direction.
+ */
 function directionToAngle(direction) {
     console.log('directionToAngle ' + direction);
     if (direction == 'up') {

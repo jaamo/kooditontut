@@ -109,28 +109,31 @@ export default class Store {
 
     pickDate(date) {
         this.selectedDay = date;
-        this.elf.x = challenges[date].elf.x;
-        this.elf.y = challenges[date].elf.y;
-        this.elf.direction = challenges[date].elf.direction;
         this.cookies = challenges[date].cookies;
         this.arena = challenges[date].arena;
         this.defaultSource = challenges[date].defaultSource;
         this.description = challenges[date].description;
+        this.resetGame();
         this.changeView('challenge');
+    }
+
+    resetGame() {
+        this.success = false;
+        this.failure = false;
+        this.elf.x = challenges[this.selectedDay].elf.x;
+        this.elf.y = challenges[this.selectedDay].elf.y;
+        this.elf.direction = challenges[this.selectedDay].elf.direction;
     }
 
     /**
      * Synchronously execute all commands in command tree.
      */
     async execute(tree, level = 0) {
-        this.success = false;
-        this.failure = false;
-        this.elf.x = challenges[this.selectedDay].elf.x;
-        this.elf.y = challenges[this.selectedDay].elf.y;
-        this.elf.direction = challenges[this.selectedDay].elf.direction;
+        this.resetGame();
         for (let line of tree) {
             console.log(level + ' ' + line.command);
             this.runCommand(line.command);
+            this.checkArena();
             this.checkCookie();
             if (this.success || this.failure) {
                 return;
@@ -180,6 +183,15 @@ export default class Store {
                 this.setChallengePassed(this.selectedDay);
                 this.success = true;
             }
+        }
+    }
+
+    /**
+     * Check if elf is still inside arena.
+     */
+    checkArena() {
+        if (this.arena[this.elf.y][this.elf.x] != 1) {
+            this.setFailure('Oho! Astuit ulos alueelta!');
         }
     }
 

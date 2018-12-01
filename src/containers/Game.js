@@ -97,7 +97,7 @@ class Game extends React.Component {
                     <Modal
                         message={store.failureMessage}
                         type="error"
-                        onClick={() => this.changeView('challenge')}
+                        onClick={() => store.resetGame()}
                     />
                 )}
                 <Container>
