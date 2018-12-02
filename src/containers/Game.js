@@ -68,15 +68,30 @@ const Map = styled.div`
     height: calc(11 * 4rem);
     position: relative;
 `;
+const Decorations = styled.div`
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    overflow: hidden;
+`;
 const Decoration = styled.div`
+    pointer-events: none;
     position: absolute;
     left: ${props => props.left};
     right: ${props => props.right};
     top: ${props => props.top};
+    bottom: ${props => props.bottom};
     z-index: 1000;
     img {
         width: ${props => props.width};
     }
+`;
+const H1 = styled.h1`
+    font-weight: 700;
+    color: #d41c1c;
+    text-shadow: 0.3rem 0.3rem 0 rgba(0, 0, 0, 0.5);
 `;
 
 @observer
@@ -98,12 +113,20 @@ class Game extends React.Component {
         const { store } = this.props;
         return (
             <div>
-                <Decoration left="-1rem" top="20%" width="4rem">
-                    <img src="/img/cookiedude.svg" />
-                </Decoration>
-                <Decoration right="-3rem" top="80%" width="8rem">
-                    <img src="/img/present.svg" />
-                </Decoration>
+                <Decorations>
+                    <Decoration left="-1rem" top="20%" width="4rem">
+                        <img src="/img/cookiedude.svg" />
+                    </Decoration>
+                    <Decoration right="-3rem" top="80%" width="8rem">
+                        <img src="/img/present.svg" />
+                    </Decoration>
+                    <Decoration left="40%" top="-1rem" width="4rem">
+                        <img src="/img/treedecoration.svg" />
+                    </Decoration>
+                    <Decoration left="60%" bottom="-4rem" width="4rem">
+                        <img src="/img/candle.svg" />
+                    </Decoration>
+                </Decorations>
                 {store.success && (
                     <Modal
                         message="WOW! Sait kerättyä kaikki piparit!"
@@ -128,7 +151,7 @@ class Game extends React.Component {
                         <GlobalStyle />
                         <GridColumn>
                             <div>
-                                <h1>Tonttu Bittiparran joulukalenteri</h1>
+                                <H1>Tonttu Bittiparran joulukalenteri</H1>
                                 <p>
                                     Apua! Tonttu Bittiparta on jäänyt jumiin
                                     tietokoneen uumeniin! Sinun tehtäväsi on
