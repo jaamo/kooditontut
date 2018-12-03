@@ -78,7 +78,7 @@ class Challenge extends React.Component {
             <StyledChallenge>
                 {this.state.showInfo && (
                     <div>
-                        <Title>1. päivä</Title>
+                        <Title>{store.selectedDay}. päivä</Title>
                         <Description
                             dangerouslySetInnerHTML={{
                                 __html: store.description
