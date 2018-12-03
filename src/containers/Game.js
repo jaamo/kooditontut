@@ -174,9 +174,11 @@ class Game extends React.Component {
                         <GridColumn>
                             <Challenge store={store} />
                         </GridColumn>
-                        <BackButton
-                            onClick={e => this.changeView('calendar')}
-                        />
+                        {!store.running && (
+                            <BackButton
+                                onClick={e => this.changeView('calendar')}
+                            />
+                        )}
                         <GridColumn>
                             <Map>
                                 {store.arena.map((row, y) =>

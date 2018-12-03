@@ -16,7 +16,13 @@ export default class Store {
     cookies = [];
 
     @observable
+    running = false;
+
+    @observable
     success = false;
+
+    @observable
+    failure = false;
 
     @observable
     currentView = 'calendar';
@@ -41,9 +47,6 @@ export default class Store {
 
     // Default source code.
     defaultSource = '';
-
-    @observable
-    failure = false;
 
     @observable
     failureMessage = '';
@@ -139,6 +142,7 @@ export default class Store {
      */
     setFailure(message) {
         this.failure = true;
+        this.running = false;
         this.failureMessage = message;
     }
 
@@ -168,6 +172,7 @@ export default class Store {
      */
     async execute(tree, level = 0) {
         this.resetGame();
+        this.running = true;
         for (let line of tree) {
             console.log(level + ' ' + line.command);
             this.runCommand(line.command);
@@ -220,6 +225,7 @@ export default class Store {
             if (this.cookies.length == 0) {
                 this.setChallengePassed(this.selectedDay);
                 this.success = true;
+                this.running = false;
             }
         }
     }

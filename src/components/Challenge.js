@@ -100,14 +100,20 @@ class Challenge extends React.Component {
                                 store.defaultSource
                             }
                         />
-                        <Button
-                            onClick={() => this.setState({ showInfo: true })}
-                        >
-                            Ohjeeseen
-                        </Button>
-                        <Button onClick={() => this.runProgram()}>
-                            Käynnistä!
-                        </Button>
+                        {!store.running && (
+                            <Button
+                                onClick={() =>
+                                    this.setState({ showInfo: true })
+                                }
+                            >
+                                Ohjeeseen
+                            </Button>
+                        )}
+                        {!store.running && (
+                            <Button onClick={() => this.runProgram()}>
+                                Käynnistä!
+                            </Button>
+                        )}
                     </div>
                 )}
             </StyledChallenge>
