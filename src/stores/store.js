@@ -179,7 +179,7 @@ export default class Store {
             if (line.tree.length > 0) {
                 await this.execute(line.tree, level + 1);
             }
-            await timeout(1000);
+            await timeout(500);
         }
     }
 
