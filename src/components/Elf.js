@@ -6,7 +6,6 @@ import { STYLE_CELL_WIDTH } from '../constants/styles.js';
  * Rotate elf based on direction.
  */
 function directionToAngle(direction) {
-    console.log('directionToAngle ' + direction);
     if (direction == 'up') {
         return '0deg';
     }
@@ -47,7 +46,6 @@ class Elf extends React.Component {
 
     render() {
         const { elf } = this.props;
-        console.log(elf.direction);
         return (
             <StyledElf elf={elf}>
                 <ElfShadowSprite src="/img/elf-shadow.svg" />

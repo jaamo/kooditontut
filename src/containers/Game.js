@@ -10,6 +10,12 @@ import Calendar from '../components/Calendar.js';
 import BackButton from '../components/BackButton.js';
 import Modal from '../components/Modal.js';
 import { STYLE_CELL_WIDTH } from '../constants/styles.js';
+import {
+    GAME_STATUS_IDLE,
+    GAME_STATUS_RUNNING,
+    GAME_STATUS_SUCCESS,
+    GAME_STATUS_FAILURE
+} from '../constants/gamestatus.js';
 
 // https://www.colourlovers.com/palette/130451/Tis_the_Season
 // #941F1F red
@@ -127,14 +133,14 @@ class Game extends React.Component {
                         <img src="/img/candle.svg" />
                     </Decoration>
                 </Decorations>
-                {store.success && (
+                {store.gameStatus == GAME_STATUS_SUCCESS && (
                     <Modal
                         message="WOW! Sait kerättyä kaikki piparit!"
                         type="success"
                         onClick={() => this.changeView('calendar')}
                     />
                 )}
-                {store.failure && (
+                {store.gameStatus == GAME_STATUS_FAILURE && (
                     <Modal
                         message={store.failureMessage}
                         type="error"

@@ -1,5 +1,11 @@
 import { observable, computed, reaction } from 'mobx';
-import parse from '../lib/parser.js';
+import {
+    GAME_STATUS_IDLE,
+    GAME_STATUS_RUNNING,
+    GAME_STATUS_SUCCESS,
+    GAME_STATUS_FAILURE
+} from '../constants/gamestatus.js';
+
 import { challenges } from './challenges.js';
 
 /**
@@ -16,13 +22,7 @@ export default class Store {
     cookies = [];
 
     @observable
-    running = false;
-
-    @observable
-    success = false;
-
-    @observable
-    failure = false;
+    gameStatus = GAME_STATUS_IDLE;
 
     @observable
     currentView = 'calendar';
@@ -96,8 +96,7 @@ export default class Store {
      * Change between two main views.
      */
     changeView(view) {
-        this.success = false;
-        this.failure = false;
+        this.gameStatus = GAME_STATUS_IDLE;
         this.currentView = view;
     }
 
@@ -133,7 +132,6 @@ export default class Store {
      * Get source for given day.
      */
     getSource(day) {
-        console.log(this.sources);
         return this.sources[day] ? this.sources[day] : false;
     }
 
@@ -141,8 +139,7 @@ export default class Store {
      * Set application to failed state.
      */
     setFailure(message) {
-        this.failure = true;
-        this.running = false;
+        this.gameStatus = GAME_STATUS_FAILURE;
         this.failureMessage = message;
     }
 
@@ -160,115 +157,43 @@ export default class Store {
     }
 
     resetGame() {
-        this.success = false;
-        this.failure = false;
+        this.gameStatus = GAME_STATUS_RUNNING;
         this.elf.x = challenges[this.selectedDay].elf.x;
         this.elf.y = challenges[this.selectedDay].elf.y;
         this.elf.direction = challenges[this.selectedDay].elf.direction;
     }
 
-    /**
-     * Synchronously execute all commands in command tree.
-     */
-    async execute(tree, level = 0) {
-        this.resetGame();
-        this.running = true;
-        for (let line of tree) {
-            console.log(level + ' ' + line.command);
-            this.runCommand(line.command);
-            this.checkArena();
-            this.checkCookie();
-            if (this.success || this.failure) {
-                return;
-            }
-            if (line.tree.length > 0) {
-                await this.execute(line.tree, level + 1);
-            }
-            await timeout(500);
-        }
-        this.running = false;
-        this.setFailure('Uups, tonttu ei päässyt piparin luo!');
+    play(gameStates) {
+        //debugger;
+        this.consumeStateBuffer(gameStates);
     }
 
     /**
-     * Run command.
+     * Recursively consume gameStates buffer.
      */
-    runCommand(command) {
-        switch (command) {
-            case 'up':
-            case 'down':
-            case 'left':
-            case 'right':
-                this.elf.direction = command;
-                break;
-            case 'move':
-                this.move();
-                break;
-            default:
-                this.setFailure('Tuntematon komento: ' + command);
-                this.failure = true;
-                break;
-        }
-    }
+    consumeStateBuffer(gameStates) {
+        console.log(new Date() + ' consume');
 
-    /**
-     * Check if player is on cookie.
-     */
-    checkCookie() {
-        // Elf is on cookie!
-        if (
-            this.cookies.length > 0 &&
-            this.cookies[0].x == this.elf.x &&
-            this.cookies[0].y == this.elf.y
-        ) {
-            this.cookies.shift();
-
-            // All cookies found!
-            if (this.cookies.length == 0) {
-                this.setChallengePassed(this.selectedDay);
-                this.success = true;
-                this.running = false;
-            }
+        // Out of states. End of game.
+        if (gameStates.length == 0) {
+            return;
         }
-    }
 
-    /**
-     * Check if elf is still inside arena.
-     */
-    checkArena() {
-        if (this.arena[this.elf.y][this.elf.x] != 1) {
-            this.setFailure('Oho! Astuit ulos alueelta!');
-        }
-    }
+        // Get current state.
+        const gameState = gameStates.shift();
 
-    /**
-     * Parse repeat count from command.
-     */
-    getRepeats(command) {
-        if (command.indexOf('repeat ')) {
-            return parseInt(
-                command.replace('repeat ', '').replace(' times', '')
-            );
-        }
-    }
+        // Move elf.
+        this.elf = gameState.elf;
+        this.gameStatus = gameState.gameStatus;
+        this.cookies = gameState.cookies;
+        this.arena = gameState.arena;
+        this.failureMessage = gameState.failureMessage;
 
-    /**
-     * Move elf.
-     */
-    move() {
-        switch (this.elf.direction) {
-            case 'up':
-                this.elf.y--;
-                break;
-            case 'down':
-                this.elf.y++;
-                break;
-            case 'left':
-                this.elf.x--;
-                break;
-            case 'right':
-                this.elf.x++;
-                break;
+        // Success!
+        if (this.gameStatus == GAME_STATUS_SUCCESS) {
+            return;
         }
+
+        setTimeout(() => this.play(gameStates), 500);
     }
 }

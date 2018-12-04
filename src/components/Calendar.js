@@ -50,7 +50,6 @@ const DisabledDay = styled.div`
     font-size: 3rem;
     font-weight: 700;
     box-shadow: 0.4rem 0.4rem 0 rgba(0, 0, 0, 1);
-    transform: rotate(${props => props.angle}deg);
 `;
 
 class Calendar extends React.Component {
@@ -64,12 +63,10 @@ class Calendar extends React.Component {
         let days = [];
         for (let i = 1; i <= 24; i++) {
             const date = new Date(2018, 11, i);
-            const angle = -10 + Math.random() * 20;
             if (this.props.currentDate.getTime() > date.getTime()) {
                 days.push(
                     <Day
                         key={i}
-                        angle={angle}
                         isDayActive={this.props.isChallegePassed(i)}
                         onClick={() => this.props.pickDate(i)}
                     >

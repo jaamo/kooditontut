@@ -8,15 +8,27 @@ export default function parse(source) {
 
     //  Go through each line, create line object and find parents.
     for (let i = 0; i < rawLines.length; i++) {
-        // Create line.
-        const line = { command: rawLines[i], tree: [], id: i };
+        let command = rawLines[i];
+        let args = {};
 
-        // Find parent row based on indentation.
-        const parentId = findParentLine(i, line.command, rawLines);
-        line.parentId = parentId;
+        if (command != '') {
+            // Parse repeat command.
+            if (command.indexOf('repeat') != -1) {
+                const iterations = command.replace('repeat ', '');
+                args.iterations = iterations;
+                command = command.replace(/ .*/, '');
+            }
 
-        // Add to tree.
-        tree.push(line);
+            // Create line.
+            const line = { command: command, args: args, tree: [], id: i };
+
+            // Find parent row based on indentation.
+            const parentId = findParentLine(i, line.command, rawLines);
+            line.parentId = parentId;
+
+            // Add to tree.
+            tree.push(line);
+        }
     }
 
     // Now rebuild the array with nested structure.
@@ -36,7 +48,6 @@ function addToNestedTree(tree, lineToAdd) {
             line.tree.push(lineToAdd);
             return;
         }
-        console.log(line);
         addToNestedTree(line.tree, lineToAdd);
     });
 }

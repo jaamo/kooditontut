@@ -1,8 +1,15 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import parse from '../lib/parser.js';
+import execute from '../lib/gamecalc.js';
 import styled from 'styled-components';
 import Button from './Button.js';
+import {
+    GAME_STATUS_IDLE,
+    GAME_STATUS_RUNNING,
+    GAME_STATUS_SUCCESS,
+    GAME_STATUS_FAILURE
+} from '../constants/gamestatus.js';
 
 const StyledChallenge = styled.div`
     position: relative;
@@ -59,17 +66,21 @@ class Challenge extends React.Component {
     componentDidMount() {}
 
     runProgram() {
+        const { store } = this.props;
+
         // Get source.
         const source = this.sourceRef.current.value;
 
         // Save source.
-        this.props.store.setSource(this.props.store.selectedDay, source);
+        store.setSource(store.selectedDay, source);
 
         // Parse source.
         const tree = parse(source);
 
-        // Run command.
-        this.props.store.execute(tree);
+        // Execute source.
+        const gameStates = execute(tree, store.elf, store.cookies, store.arena);
+
+        this.props.store.play(gameStates);
     }
 
     render() {
@@ -100,7 +111,7 @@ class Challenge extends React.Component {
                                 store.defaultSource
                             }
                         />
-                        {!store.running && (
+                        {!store.gameStatus != GAME_STATUS_RUNNING && (
                             <Button
                                 onClick={() =>
                                     this.setState({ showInfo: true })
@@ -109,7 +120,7 @@ class Challenge extends React.Component {
                                 Ohjeeseen
                             </Button>
                         )}
-                        {!store.running && (
+                        {!store.gameStatus != GAME_STATUS_RUNNING && (
                             <Button onClick={() => this.runProgram()}>
                                 Käynnistä!
                             </Button>
