@@ -186,6 +186,8 @@ export default class Store {
             }
             await timeout(500);
         }
+        this.running = false;
+        this.setFailure('Uups, tonttu ei päässyt piparin luo!');
     }
 
     /**
