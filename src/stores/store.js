@@ -51,6 +51,9 @@ export default class Store {
     @observable
     failureMessage = '';
 
+    // Function to verify source code.
+    checkSource = () => true;
+
     // RRRIGHT NOW!
     @observable
     currentDate = new Date();
@@ -152,6 +155,7 @@ export default class Store {
         this.arena = challenges[date].arena;
         this.defaultSource = challenges[date].defaultSource;
         this.description = challenges[date].description;
+        this.checkSource = challenges[date].checkSource;
         this.resetGame();
         this.changeView('challenge');
     }

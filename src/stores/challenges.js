@@ -17,7 +17,7 @@ export const challenges = {
 
         cookies: [{ x: 5, y: 3 }],
 
-        checkSource: source => true,
+        checkSource: source => false,
 
         defaultSource: `up
 move
@@ -48,7 +48,7 @@ move`,
 
         cookies: [{ x: 2, y: 2 }],
 
-        checkSource: source => true,
+        checkSource: source => false,
 
         defaultSource: `up
 move
@@ -79,7 +79,7 @@ move`,
 
         cookies: [{ x: 8, y: 2 }],
 
-        checkSource: source => true,
+        checkSource: source => false,
 
         defaultSource: ``,
 
@@ -112,7 +112,7 @@ move`,
 
         elf: { x: 5, y: 5, direction: 'up' },
 
-        checkSource: source => true,
+        checkSource: source => false,
 
         arena: [
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -125,6 +125,35 @@ move`,
             [0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        ]
+    },
+    '5': {
+        description: `
+            <p>
+                Mjahans. Pipareita voi näemmä olla useita?! Tänään voit päättää reitin itse.
+            </p>
+        `,
+
+        cookies: [{ x: 1, y: 1 }, { x: 6, y: 3 }, { x: 9, y: 8 }],
+
+        defaultSource: ``,
+
+        elf: { x: 2, y: 8, direction: 'up' },
+
+        checkSource: source => false,
+
+        arena: [
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+            [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+            [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+            [0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0],
+            [0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0],
+            [0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0],
+            [0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0],
+            [0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0],
+            [0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         ]
     }

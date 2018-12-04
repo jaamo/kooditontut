@@ -71,6 +71,13 @@ class Challenge extends React.Component {
         // Get source.
         const source = this.sourceRef.current.value;
 
+        const preRunError = store.checkSource(source);
+
+        if (preRunError !== false) {
+            store.setFailure(preRunError);
+            return;
+        }
+
         // Save source.
         store.setSource(store.selectedDay, source);
 
