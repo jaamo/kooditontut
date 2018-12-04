@@ -156,5 +156,51 @@ move`,
             [0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         ]
+    },
+    '6': {
+        description: `
+            <p>
+        Tänään opitaan ihan uusi juttu! Nimittäin koodin toistaminen. Jos kirjoitat repeat 5 ja sen jälkeen seuraavalle riville komennon, toistetaan haluamasi komento viisi kertaa. Esimerkiksi näin:
+        </p>
+
+            <p class="code">
+                repeat 2
+                <br />
+        &nbsp;&nbsp;move
+        </p>
+        <p>
+        Repeat-komennon jälkeisten komentojen alkuun pitää laittaa kaksi tyhjää, jotta hommat pelittää. Yritä muokata esimerkkikoodia niin, että tonttu saa piparin.
+        </p>
+        `,
+
+        cookies: [{ x: 5, y: 1 }],
+
+        checkSource: source => {
+            if (!source.match(/repeat/)) {
+                return 'Muista käyttää repeat-komentoa!';
+            } else {
+                return false;
+            }
+        },
+
+        defaultSource: `repeat 2
+  move
+`,
+
+        elf: { x: 5, y: 5, direction: 'up' },
+
+        arena: [
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        ]
     }
 };

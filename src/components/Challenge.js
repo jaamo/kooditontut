@@ -113,12 +113,9 @@ class Challenge extends React.Component {
                     <div>
                         <CodeArea
                             ref={this.sourceRef}
-                            defaultValue={
-                                store.getSource(store.selectedDay) ||
-                                store.defaultSource
-                            }
+                            defaultValue={store.source}
                         />
-                        {!store.gameStatus != GAME_STATUS_RUNNING && (
+                        {store.gameStatus != GAME_STATUS_RUNNING && (
                             <Button
                                 onClick={() =>
                                     this.setState({ showInfo: true })
@@ -127,7 +124,7 @@ class Challenge extends React.Component {
                                 Ohjeeseen
                             </Button>
                         )}
-                        {!store.gameStatus != GAME_STATUS_RUNNING && (
+                        {store.gameStatus != GAME_STATUS_RUNNING && (
                             <Button onClick={() => this.runProgram()}>
                                 Käynnistä!
                             </Button>

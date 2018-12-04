@@ -46,7 +46,8 @@ export default class Store {
     selectedDay = 0;
 
     // Default source code.
-    defaultSource = '';
+    @observable
+    source = '';
 
     @observable
     failureMessage = '';
@@ -153,7 +154,7 @@ export default class Store {
         this.selectedDay = date;
         this.cookies = challenges[date].cookies;
         this.arena = challenges[date].arena;
-        this.defaultSource = challenges[date].defaultSource;
+        this.source = this.getSource(date) || challenges[date].defaultSource;
         this.description = challenges[date].description;
         this.checkSource = challenges[date].checkSource;
         this.resetGame();

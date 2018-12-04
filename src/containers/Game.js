@@ -180,7 +180,7 @@ class Game extends React.Component {
                         <GridColumn>
                             <Challenge store={store} />
                         </GridColumn>
-                        {!store.running && (
+                        {store.gameStatus != GAME_STATUS_RUNNING && (
                             <BackButton
                                 onClick={e => this.changeView('calendar')}
                             />
