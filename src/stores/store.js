@@ -196,6 +196,7 @@ export default class Store {
 
         // Success!
         if (this.gameStatus == GAME_STATUS_SUCCESS) {
+            this.setChallengePassed(this.selectedDay);
             return;
         }
 
