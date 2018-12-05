@@ -20,6 +20,16 @@ const StyledChallenge = styled.div`
     padding: 2rem;
     color: black;
     box-shadow: 0.4rem 0.4rem 0 rgba(0, 0, 0, 0.8);
+    textarea {
+        font-family: 'Share Tech Mono', monospace;
+        width: 30rem;
+        height: 20rem;
+        display: block;
+        border: 0;
+        background: #fcf7e6;
+        padding: 1rem;
+        font-size: 2rem;
+    }
 `;
 
 const Title = styled.h1`
@@ -42,36 +52,41 @@ const Description = styled.div`
     }
 `;
 
-const CodeArea = styled.textarea`
-    font-family: 'Share Tech Mono', monospace;
-    width: 30rem;
-    height: 20rem;
-    display: block;
-    border: 0;
-    background: #fcf7e6;
-    padding: 1rem;
-    font-size: 2rem;
-`;
-
 @observer
 class Challenge extends React.Component {
     constructor(props) {
         super(props);
         this.sourceRef = React.createRef();
         this.state = {
-            showInfo: true
+            showInfo: true,
+            source: '',
+            previousSource: ''
         };
     }
 
-    componentDidMount() {}
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (prevState.previousSource !== nextProps.store.source) {
+            prevState.source = nextProps.store.source;
+            prevState.previousSource = nextProps.store.source;
+        }
+        return prevState;
+    }
+
+    componentDidMount() {
+        console.log(this.props.store.source);
+        this.setState({ source: this.props.store.source });
+    }
+
+    handleSourceChange(event) {
+        this.setState({ source: event.target.value });
+    }
 
     runProgram() {
         const { store } = this.props;
 
         // Get source.
-        const source = this.sourceRef.current.value;
 
-        const preRunError = store.checkSource(source);
+        const preRunError = store.checkSource(this.state.source);
 
         if (preRunError !== false) {
             store.setFailure(preRunError);
@@ -79,10 +94,10 @@ class Challenge extends React.Component {
         }
 
         // Save source.
-        store.setSource(store.selectedDay, source);
+        store.setSource(store.selectedDay, this.state.source);
 
         // Parse source.
-        const tree = parse(source);
+        const tree = parse(this.state.source);
 
         // Execute source.
         const gameStates = execute(tree, store.elf, store.cookies, store.arena);
@@ -111,9 +126,10 @@ class Challenge extends React.Component {
                 )}
                 {!this.state.showInfo && (
                     <div>
-                        <CodeArea
-                            ref={this.sourceRef}
-                            defaultValue={store.source}
+                        <textarea
+                            /*ref={this.sourceRef}*/
+                            onChange={e => this.handleSourceChange(e)}
+                            value={this.state.source}
                         />
                         {store.gameStatus != GAME_STATUS_RUNNING && (
                             <Button
