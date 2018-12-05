@@ -73,7 +73,6 @@ class Challenge extends React.Component {
     }
 
     componentDidMount() {
-        console.log(this.props.store.source);
         this.setState({ source: this.props.store.source });
     }
 
@@ -85,7 +84,7 @@ class Challenge extends React.Component {
         const { store } = this.props;
 
         // Get source.
-
+        console.log(this.state.source);
         const preRunError = store.checkSource(this.state.source);
 
         if (preRunError !== false) {

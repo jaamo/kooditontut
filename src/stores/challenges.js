@@ -202,5 +202,119 @@ move`,
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         ]
+    },
+    '7': {
+        description: `
+            <p>
+            Jatkahan repeat-komennolla touhuamista. Tällä kertaa vähän pidempi reitti.
+            </p>
+        `,
+
+        cookies: [{ x: 3, y: 9 }],
+
+        checkSource: source => {
+            if (!source.match(/repeat/)) {
+                return 'Muista käyttää repeat-komentoa!';
+            } else {
+                return false;
+            }
+        },
+
+        defaultSource: `repeat 2
+  move
+`,
+
+        elf: { x: 5, y: 5, direction: 'up' },
+
+        arena: [
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0],
+            [0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+            [0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+            [0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+            [0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+            [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        ]
+    },
+    '8': {
+        description: `
+            <p>
+            Repeat-komento voi sisältää useita alakomentoja. Vähän niinkuin näin:
+            </p>
+            <p class="code">
+                repeat 2
+                <br />
+                &nbsp;&nbsp;move
+                <br />
+                &nbsp;&nbsp;right
+            </p>
+            <p>
+            Muista vaan lisätä nuo kaksi tyhjää rivina alkuun!
+            </p>
+        `,
+
+        cookies: [{ x: 7, y: 3 }],
+
+        checkSource: source => {
+            const matches = source.match(/repeat/g);
+            if (matches && matches.length == 1) {
+                return false;
+            } else {
+                return 'Heeei, käytä yhtä repeat-komentoa!';
+            }
+        },
+
+        defaultSource: ``,
+
+        elf: { x: 3, y: 7, direction: 'up' },
+
+        arena: [
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0],
+            [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+            [0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0],
+            [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        ]
+    },
+    '9': {
+        description: `
+            <p>
+            Otetaas tänään vähän iisimmin. Ratkaise miten haluat!
+            </p>
+        `,
+
+        cookies: [{ x: 5, y: 5 }, { x: 9, y: 1 }],
+
+        checkSource: source => {
+            return false;
+        },
+
+        defaultSource: ``,
+
+        elf: { x: 1, y: 9, direction: 'up' },
+
+        arena: [
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+            [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+            [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+            [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+            [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+            [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+            [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+            [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+            [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        ]
     }
 };
