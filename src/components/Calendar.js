@@ -19,7 +19,6 @@ const Day = styled.div`
     font-size: 3rem;
     font-weight: 700;
     box-shadow: 0.4rem 0.4rem 0 rgba(0, 0, 0, 1);
-    transform: rotate(${props => props.angle}deg);
     ::after {
         position: absolute;
         display: ${props => (props.isDayActive ? 'block' : 'none')};
@@ -74,11 +73,7 @@ class Calendar extends React.Component {
                     </Day>
                 );
             } else {
-                days.push(
-                    <DisabledDay angle={angle} key={i}>
-                        {i}
-                    </DisabledDay>
-                );
+                days.push(<DisabledDay key={i}>{i}</DisabledDay>);
             }
         }
         return <StyledCalendar>{days}</StyledCalendar>;
