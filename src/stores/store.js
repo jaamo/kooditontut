@@ -162,7 +162,7 @@ export default class Store {
     }
 
     resetGame() {
-        this.gameStatus = GAME_STATUS_RUNNING;
+        this.gameStatus = GAME_STATUS_IDLE;
         this.cookies = challenges[this.selectedDay].cookies;
         this.elf.x = challenges[this.selectedDay].elf.x;
         this.elf.y = challenges[this.selectedDay].elf.y;
