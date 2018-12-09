@@ -316,5 +316,40 @@ move`,
             [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         ]
+    },
+
+    '10': {
+        description: `
+            <p>
+            Koitappas ratkaista tämä viidellä rivillä koodia.
+            </p>
+        `,
+
+        cookies: [{ x: 9, y: 1 }],
+
+        checkSource: source => {
+            const rows = source.match(/\n/g);
+            return rows.length < 6
+                ? false
+                : 'Heeeei! Tämä on tehtävissä viidellä rivillä. Koitappa uudestaan.';
+        },
+
+        defaultSource: ``,
+
+        elf: { x: 1, y: 9, direction: 'up' },
+
+        arena: [
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0],
+            [0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0],
+            [0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0],
+            [0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0],
+            [0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0],
+            [0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0],
+            [0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0],
+            [0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        ]
     }
 };
