@@ -351,5 +351,42 @@ move`,
             [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         ]
+    },
+
+    '11': {
+        description: `
+            <p>
+            Noo tämmönen iisimpi silmukka tällä kertaa. Käytä repeattia.
+            </p>
+        `,
+
+        cookies: [{ x: 9, y: 1 }],
+
+        checkSource: source => {
+            const matches = source.match(/repeat/g);
+            if (matches && matches.length == 1) {
+                return false;
+            } else {
+                return 'Nonii. Sovittiin, että käytetään repeat-komentoa!';
+            }
+        },
+
+        defaultSource: ``,
+
+        elf: { x: 1, y: 9, direction: 'up' },
+
+        arena: [
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0],
+            [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0],
+            [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0],
+            [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0],
+            [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0],
+            [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0],
+            [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0],
+            [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0],
+            [0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        ]
     }
 };
