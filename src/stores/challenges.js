@@ -364,7 +364,7 @@ move`,
 
         checkSource: source => {
             const matches = source.match(/repeat/g);
-            if (matches && matches.length == 1) {
+            if (matches && matches.length > 0) {
                 return false;
             } else {
                 return 'Nonii. Sovittiin, että käytetään repeat-komentoa!';
@@ -386,6 +386,52 @@ move`,
             [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0],
             [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0],
             [0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        ]
+    },
+
+    '12': {
+        description: `
+            <p>
+            Noo tämmönen iisimpi silmukka tällä kertaa. Käytä repeattia.
+            </p>
+        `,
+
+        cookies: [{ x: 5, y: 2 }],
+
+        checkSource: source => {
+            const matches = source.match(/if/g);
+            if (matches && matches.length == 1) {
+                return false;
+            } else {
+                return 'Käytä sitä if-komentoa!';
+            }
+        },
+
+        tickFunction: (arena, tick) => {
+            console.log('Tickfunction ' + tick);
+            if (tick % 2 == 0) {
+                arena[5][5] = 0;
+            } else {
+                arena[5][5] = 1;
+            }
+        },
+
+        defaultSource: ``,
+
+        elf: { x: 5, y: 8, direction: 'up' },
+
+        arena: [
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         ]
     }
