@@ -33,6 +33,9 @@ export default class Store {
     @observable
     arena = [];
 
+    // Arena
+    tickFunction = (arena, tick) => {};
+
     @observable
     description = '';
 
@@ -157,6 +160,7 @@ export default class Store {
         this.source = this.getSource(date) || challenges[date].defaultSource;
         this.description = challenges[date].description;
         this.checkSource = challenges[date].checkSource;
+        this.tickFunction = challenges[date].tickFunction;
         this.resetGame();
         this.changeView('challenge');
     }
@@ -167,6 +171,8 @@ export default class Store {
         this.elf.x = challenges[this.selectedDay].elf.x;
         this.elf.y = challenges[this.selectedDay].elf.y;
         this.elf.direction = challenges[this.selectedDay].elf.direction;
+        this.area = challenges[this.selectedDay].arena;
+        this.tick = 0;
     }
 
     play(gameStates) {

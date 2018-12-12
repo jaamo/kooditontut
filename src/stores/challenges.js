@@ -393,7 +393,16 @@ move`,
     '12': {
         description: `
             <p>
-            Noo tämmönen iisimpi silmukka tällä kertaa. Käytä repeattia.
+            No nyt tulee uus juttu. Nimittäin if-komento. Sen avulla voit tutkia, onko jokin asia mahdollinen. Voit esimerkiksi selvittää, voiko tonttu liikkua eteenpäin. Näin:
+            </p>
+            <p class="code">
+                if can move
+                <br />
+                &nbsp;&nbsp;move
+                <br />
+            </p>
+            <p>
+                Tällä koodilla tonttu ei liiku, jos eteenpäin ei pääse. Tämän päivän kentässä on reikä keskellä! Mutta reitti aukeaa ihan kohta. Täydennä esimerkkikoodia if can move -komennolla siten, että tonttu odottaa reitin avautumista.
             </p>
         `,
 
@@ -409,15 +418,15 @@ move`,
         },
 
         tickFunction: (arena, tick) => {
-            console.log('Tickfunction ' + tick);
-            if (tick % 2 == 0) {
+            if (tick < 7) {
                 arena[5][5] = 0;
             } else {
                 arena[5][5] = 1;
             }
         },
 
-        defaultSource: ``,
+        defaultSource: `repeat 10
+  move`,
 
         elf: { x: 5, y: 8, direction: 'up' },
 
@@ -428,6 +437,64 @@ move`,
             [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        ]
+    },
+
+    '13': {
+        description: `
+            <p>
+            No nyt tulee uus juttu. Nimittäin if-komento. Sen avulla voit tutkia, onko jokin asia mahdollinen. Voit esimerkiksi selvittää, voiko tonttu liikkua eteenpäin. Näin:
+            </p>
+            <p class="code">
+                if can move
+                <br />
+                &nbsp;&nbsp;move
+                <br />
+            </p>
+            <p>
+                Tällä koodilla tonttu ei liiku, jos eteenpäin ei pääse. Tämän päivän kentässä on reikä keskellä! Mutta reitti aukeaa ihan kohta. Täydennä esimerkkikoodia if can move -komennolla siten, että tonttu odottaa reitin avautumista.
+            </p>
+        `,
+
+        cookies: [{ x: 5, y: 3 }],
+
+        checkSource: source => {
+            const matches = source.match(/if/g);
+            if (matches && matches.length > 0) {
+                return false;
+            } else {
+                return 'Tän voi päästä ilman if-komentoa tuurilla läpi. Mutta ei käy!';
+            }
+        },
+
+        tickFunction: (arena, tick) => {
+            if (tick == 0) {
+                if (Math.random() < 0.5) {
+                    arena[5][4] = 1;
+                    arena[5][6] = 0;
+                } else {
+                    arena[5][4] = 0;
+                    arena[5][6] = 1;
+                }
+            }
+        },
+
+        defaultSource: ``,
+
+        elf: { x: 5, y: 8, direction: 'up' },
+
+        arena: [
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0],
+            [0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0],
+            [0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0],
             [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],

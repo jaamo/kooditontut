@@ -99,7 +99,13 @@ class Challenge extends React.Component {
         const tree = parse(this.state.source);
 
         // Execute source.
-        const gameStates = execute(tree, store.elf, store.cookies, store.arena);
+        const gameStates = execute(
+            tree,
+            store.elf,
+            store.cookies,
+            store.arena,
+            store.tickFunction
+        );
 
         this.props.store.play(gameStates);
     }

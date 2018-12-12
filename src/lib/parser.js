@@ -15,8 +15,15 @@ export default function parse(source) {
             // Parse repeat command.
             if (command.indexOf('repeat') != -1) {
                 const iterations = command.replace('repeat ', '');
-                args.iterations = iterations;
-                command = command.replace(/ .*/, '');
+                args.iterations = parseInt(iterations);
+                command = command.replace(/repeat.*/, 'repeat');
+            }
+
+            // Parse if command.
+            if (command.indexOf('if ') != -1) {
+                const condition = command.replace('if ', '').trim();
+                args.condition = condition;
+                command = command.replace(/if.*/, 'if');
             }
 
             // Create line.

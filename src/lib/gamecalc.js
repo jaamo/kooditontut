@@ -15,17 +15,32 @@ const state = {
 };
 
 // List of all game states.
-const gameStates = [];
+let gameStates = [];
+
+// Tickfunction. This is run in the beginning of every iteration.
+let tickFunction = (arena, tick) => {};
+
+// Iteration counter.
+let tick = 0;
 
 /**
  * Reset game and execute!
  */
-export default function execute(tree, elf, cookies, arena) {
+export default function execute(tree, elf, cookies, arena, newTickFunction) {
     // Deep clone game state.
     state.elf = JSON.parse(JSON.stringify(elf));
     state.cookies = JSON.parse(JSON.stringify(cookies));
     state.arena = JSON.parse(JSON.stringify(arena));
     state.gameStatus = GAME_STATUS_RUNNING;
+    tick = 0;
+    gameStates = [];
+
+    // Save tick function.
+    if (typeof newTickFunction == 'function') {
+        tickFunction = newTickFunction;
+    } else {
+        tickFunction = (arena, tick) => {};
+    }
 
     // Save initial state.
     saveState();
@@ -34,7 +49,7 @@ export default function execute(tree, elf, cookies, arena) {
     executeTree(tree, 0);
 
     // Check if we have cookies left.
-    if (state.cookies.length > 0) {
+    if (state.gameStatus != GAME_STATUS_FAILURE && state.cookies.length > 0) {
         state.gameStatus = GAME_STATUS_FAILURE;
         setFailure('Uups, tonttu ei päässyt piparin luo!');
         saveState();
@@ -49,7 +64,19 @@ export default function execute(tree, elf, cookies, arena) {
 function executeTree(tree, level = 0) {
     // Iterate all lines in tree.
     for (let line of tree) {
-        //console.log(new Date() + ': ' + line.command);
+        console.log(new Date() + ': ' + line.command, line.args);
+
+        // Skip tree if game is over.
+        if (
+            state.gameStatus == GAME_STATUS_SUCCESS ||
+            state.gameStatus == GAME_STATUS_FAILURE
+        ) {
+            saveState();
+            return false;
+        }
+
+        initTick();
+
         // Run command.
         runCommand(line.command);
 
@@ -60,16 +87,13 @@ function executeTree(tree, level = 0) {
         checkCookie();
 
         // Check if the game is still on.
-        if (
+        /*if (
             state.gameStatus == GAME_STATUS_SUCCESS ||
             state.gameStatus == GAME_STATUS_FAILURE
         ) {
             saveState();
             return;
-        }
-
-        // Save game state.
-        saveState();
+        }*/
 
         // Execute repeat command.
         if (
@@ -78,10 +102,44 @@ function executeTree(tree, level = 0) {
             line.args.iterations
         ) {
             for (let i = 0; i < line.args.iterations; i++) {
-                executeTree(line.tree, level + 1);
+                if (!executeTree(line.tree, level + 1)) {
+                    return false;
+                }
             }
         }
+
+        // Execute if-command.
+        else if (line.command == 'if') {
+            if (line.args.condition == 'can move') {
+                if (canMove()) {
+                    executeTree(line.tree, level + 1);
+                } else {
+                    saveState();
+                }
+            } else {
+                setFailure(
+                    'Tuntematon komento: ' +
+                        line.command +
+                        ' ' +
+                        line.args.condition
+                );
+            }
+        } else {
+            // Save game state.
+            saveState();
+        }
     }
+
+    return true;
+}
+
+/**
+ * Execute this function on each tick.
+ */
+function initTick() {
+    tickFunction(state.arena, tick);
+    console.log('Tick ' + tick);
+    tick++;
 }
 
 /**
@@ -116,6 +174,8 @@ function runCommand(command) {
             move();
             break;
         case 'repeat':
+            break;
+        case 'if':
             break;
         default:
             setFailure('Tuntematon komento: ' + command);
@@ -170,4 +230,28 @@ function move() {
             state.elf.x++;
             break;
     }
+}
+
+/**
+ * Return true if elf can move to given direction.
+ */
+function canMove() {
+    let newX = state.elf.x;
+    let newY = state.elf.y;
+    switch (state.elf.direction) {
+        case 'up':
+            newY--;
+            break;
+        case 'down':
+            newY++;
+            break;
+        case 'left':
+            newX--;
+            break;
+        case 'right':
+            newX++;
+            break;
+    }
+
+    return state.arena[newY][newX] == 1;
 }
