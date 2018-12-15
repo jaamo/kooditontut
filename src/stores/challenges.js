@@ -501,5 +501,146 @@ move`,
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         ]
+    },
+    '14': {
+        description: `
+            <p>
+            No nyt jatketaan if-komennon käyttöä. Koitappas päästä piparille.
+            </p>
+        `,
+
+        cookies: [{ x: 9, y: 1 }],
+
+        checkSource: source => {
+            const matches = source.match(/if/g);
+            if (matches && matches.length > 0) {
+                return false;
+            } else {
+                return 'Tän voi päästä ilman if-komentoa tuurilla läpi. Mutta ei käy!';
+            }
+        },
+
+        tickFunction: (arena, tick) => {
+            if (tick % 3 == 0) {
+                const opencell = 1 + Math.floor(Math.random() * 8);
+                for (let i = 1; i <= 8; i++) {
+                    arena[6][i] = 0;
+                }
+                arena[6][opencell] = 1;
+            }
+        },
+
+        defaultSource: ``,
+
+        elf: { x: 1, y: 9, direction: 'up' },
+
+        arena: [
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0],
+            [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+            [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        ]
+    },
+    '15': {
+        description: `
+            <p>
+            Ooookkei. Unohdetaanpa if-lauseet hetkeksi. Tieesitkös, että voit käyttää repeat-lauseita sisäkkäin? Eli näin:
+            </p>
+            <p class="code">
+                repeat 2
+                <br />
+                &nbsp;&nbsp;up
+                <br />
+                &nbsp;&nbsp;move
+                <br />
+                &nbsp;&nbsp;repeat 4
+                <br />
+                &nbsp;&nbsp;&nbsp;&nbsp;left
+                <br />
+                &nbsp;&nbsp;&nbsp;&nbsp;move
+                <br />
+            </p>
+            <p>
+            Teeppäs päivän tehtävä sisäkkäisillä repeateilla.
+            </p>
+        `,
+
+        cookies: [{ x: 9, y: 9 }],
+
+        checkSource: source => {
+            const matches = source.match(/  repeat/g);
+            if (matches && matches.length > 0) {
+                return false;
+            } else {
+                return 'Käytetään niitä sisäkkäisiä repeatteja!';
+            }
+        },
+
+        tickFunction: (arena, tick) => {},
+
+        defaultSource: ``,
+
+        elf: { x: 1, y: 9, direction: 'up' },
+
+        arena: [
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0],
+            [0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0],
+            [0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0],
+            [0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0],
+            [0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0],
+            [0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0],
+            [0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0],
+            [0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0],
+            [0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        ]
+    },
+
+    '16': {
+        description: `
+            <p>
+            Tänään vedetään tuurilla! Saatko kipitettyä piparille, ennenkuin kenttä sulkeutuu!
+            </p>
+        `,
+
+        cookies: [{ x: 9, y: 1 }],
+
+        checkSource: source => {
+            return false;
+        },
+
+        tickFunction: (arena, tick) => {
+            if (tick % 3 == 0) {
+                const x = 1 + Math.floor(Math.random() * 8);
+                const y = 1 + Math.floor(Math.random() * 8);
+                arena[y][x] = 0;
+            }
+        },
+
+        defaultSource: ``,
+
+        elf: { x: 1, y: 9, direction: 'up' },
+
+        arena: [
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+            [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+            [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+            [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+            [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+            [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+            [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+            [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+            [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        ]
     }
 };

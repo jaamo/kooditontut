@@ -171,8 +171,7 @@ export default class Store {
         this.elf.x = challenges[this.selectedDay].elf.x;
         this.elf.y = challenges[this.selectedDay].elf.y;
         this.elf.direction = challenges[this.selectedDay].elf.direction;
-        this.area = challenges[this.selectedDay].arena;
-        this.tick = 0;
+        this.arena = challenges[this.selectedDay].arena;
     }
 
     play(gameStates) {

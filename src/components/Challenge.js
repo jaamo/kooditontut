@@ -84,7 +84,6 @@ class Challenge extends React.Component {
         const { store } = this.props;
 
         // Get source.
-        console.log(this.state.source);
         const preRunError = store.checkSource(this.state.source);
 
         if (preRunError !== false) {
@@ -94,6 +93,9 @@ class Challenge extends React.Component {
 
         // Save source.
         store.setSource(store.selectedDay, this.state.source);
+
+        // Reset game.
+        store.resetGame();
 
         // Parse source.
         const tree = parse(this.state.source);
