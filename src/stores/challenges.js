@@ -521,7 +521,7 @@ move`,
         },
 
         tickFunction: (arena, tick) => {
-            if (tick % 3 == 0) {
+            if (tick == 0) {
                 const opencell = 1 + Math.floor(Math.random() * 8);
                 for (let i = 1; i <= 8; i++) {
                     arena[6][i] = 0;
@@ -640,6 +640,81 @@ move`,
             [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
             [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
             [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        ]
+    },
+
+    '17': {
+        description: `
+            <p>
+            No just joo! Tää on aika ärsyttävä. Parit repeatit ja iffit kehiin!
+            </p>
+        `,
+
+        cookies: [{ x: 9, y: 1 }],
+
+        checkSource: source => {
+            return false;
+        },
+
+        tickFunction: (arena, tick) => {
+            if (tick == 0) {
+                [2, 4, 6, 8].map(y => {
+                    const opencell = 1 + Math.floor(Math.random() * 8);
+                    arena[y][opencell] = 1;
+                });
+            }
+        },
+
+        defaultSource: ``,
+
+        elf: { x: 1, y: 9, direction: 'up' },
+
+        arena: [
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        ]
+    },
+
+    '18': {
+        description: `
+            <p>
+            Selviitkö sokkelon loppuun?
+            </p>
+        `,
+
+        cookies: [{ x: 9, y: 1 }],
+
+        checkSource: source => {
+            return false;
+        },
+
+        tickFunction: (arena, tick) => {},
+
+        defaultSource: ``,
+
+        elf: { x: 1, y: 9, direction: 'up' },
+
+        arena: [
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0],
+            [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0],
+            [0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0],
+            [0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0],
+            [0, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0],
+            [0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0],
+            [0, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         ]
     }
