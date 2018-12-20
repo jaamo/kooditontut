@@ -792,5 +792,55 @@ move`,
             [0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         ]
+    },
+
+    '21': {
+        description: `
+            <p>
+            Haeppas järjestyksessä nää.
+        </p>
+        `,
+
+        cookies: [{ x: 8, y: 7 }],
+
+        checkSource: source => {
+            const repeatMatches = source.match(/  repeat/g);
+            const ifMatches = source.match(/  repeat/g);
+            if (
+                repeatMatches &&
+                ifMatches &&
+                repeatMatches.length > 0 &&
+                ifMatches.length > 0
+            ) {
+                return false;
+            } else {
+                return 'Käytä repeattia ja iffiä. Ei vedetä tuurilla.';
+            }
+        },
+
+        tickFunction: (arena, tick) => {
+            if (tick == 0) {
+                const y = Math.round(Math.random() * 2);
+                arena[3 + y * 2][5] = 1;
+            }
+        },
+
+        defaultSource: ``,
+
+        elf: { x: 1, y: 3, direction: 'right' },
+
+        arena: [
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0],
+            [0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0],
+            [0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0],
+            [0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0],
+            [0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        ]
     }
 };
