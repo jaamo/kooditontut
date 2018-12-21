@@ -804,8 +804,8 @@ move`,
         cookies: [{ x: 8, y: 7 }],
 
         checkSource: source => {
-            const repeatMatches = source.match(/  repeat/g);
-            const ifMatches = source.match(/  repeat/g);
+            const repeatMatches = source.match(/.*repeat.*/g);
+            const ifMatches = source.match(/.*if.*/g);
             if (
                 repeatMatches &&
                 ifMatches &&
