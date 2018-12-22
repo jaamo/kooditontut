@@ -41,6 +41,7 @@ const Title = styled.h1`
     border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
     box-shadow: 0.4rem 0.4rem 0 rgba(0, 0, 0, 0.8);
     transform: rotate(${-10 + Math.random() * 20}deg);
+    width: 15rem;
 `;
 
 const Description = styled.div`
